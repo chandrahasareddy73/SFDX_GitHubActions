@@ -1,0 +1,21 @@
+name: PMD Check
+on: 
+  pull_request: 
+    branches: [ QA ] # Only run for PRs targeting OrgSource
+jobs:
+  pmd:
+    runs-on: ubuntu-latest
+    permissions: read-all
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run PMD
+        uses: pmd/pmd-github-action@v2
+          
+        with:
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          rulesets: 'config/ruleset.xml' # Adjust path if your ruleset.xml is elsewhere
+          sourcePath: 'force-app/main/default'
+          version: latest
+          analyzeModifiedFilesOnly: true
+          createGitHubAnnotations: true
+          uploadSarifReport: false

@@ -1,0 +1,44 @@
+# This is a basic workflow that is manually triggered
+
+name: Validate QA
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    validate-QA:
+        runs-on: ubuntu-latest
+        steps:
+        # Checkout the source code
+            - name: 'Checkout source code'
+              uses: actions/checkout@v2
+        # Install Salesforce CLI
+            - name: 'Install Salesforce CLI'
+              run: |
+                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                  mkdir ~/sfdx
+                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                  ~/sfdx/bin/sfdx version
+                  
+        # Store secret for acc org
+            - name: 'Populate auth file with SFDX_AUTH_URL secret'
+              shell: bash
+              run: |
+                  echo ${{ secrets.SFDX_AUTH_URL}} > ./SFDX_AUTH_URL.txt
+                  secretFileSize=$(wc -c "./SFDX_AUTH_URL.txt" | awk '{print $1}')
+                  if [ $secretFileSize == 1 ]; then
+                      echo "Missing SFDX_AUTH_URL secret. Is this workflow running on a fork?";
+                      exit 1;
+                  fi
+            # Authenticate QA
+            - name: 'Authenticate QA'
+              run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -a meeraacc -d
+              
+            # Deploy source to QA org
+            - name: 'Push source to QA org'
+              run: sfdx force:source:deploy -u pottennagari.chandra@salesforce.com --testlevel RunLocalTests -c -p force-app/main/default

@@ -1,0 +1,33 @@
+actions:
+  - actionsdesk/github-actions-allow-list-as-code-action@* # need to make sure to allow this one
+  - joshjohanning/* # all of my actions
+  - azure/*
+  - docker/*
+  - stefanbuck/github-issue-parser@*
+  - ruby/setup-ruby@v1
+  - ossf/scorecard-action@*
+  - lindluni/actions-variable-groups@v2*
+  - marocchino/sticky-pull-request-comment@*
+  - tibdex/github-app-token@*
+  - peter-murray/workflow-application-token-action@*
+  - enricoMi/publish-unit-test-result-action@*
+  - test-summary/action@*
+  - mikepenz/gradle-dependency-submission@*
+  - irongut/CodeCoverageSummary@*
+  - louisBrunner/checks-action@*
+  - aquasecurity/tfsec-sarif-action@*
+  - benday-inc/download-latest-artifact@*
+  - benc-uk/workflow-dispatch@*
+  - sonarSource/*
+  - 5monkeys/cobertura-action@*
+  - zgosalvez/github-actions-ensure-sha-pinned-actions@f32435541e24cd6a4700a7f52bb2ec59e80603b1
+  - nowactions/update-majorver@*
+  - mickeygoussetorg/get-a-dad-joke@*
+  - peter-evans/create-or-update-comment@*
+  - dorny/test-reporter@*
+  - cschleiden/replace-tokens@*
+  - DeveloperMetrics/deployment-frequency@main
+  - mxschmitt/action-tmate@*
+  - hashicorp/*
+  - antifree/json-to-variables@*
+  - issue-ops/*
