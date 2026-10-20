@@ -156,5 +156,3 @@ jobs:
               run: |
                   sf project deploy start -d "changed-sources/force-app" --dry-run  --test-level NoTestRun
                        
-            - name: 'Deploy destructive changes (if any)'
-              run: sf project deploy start -d "changed-sources/destructiveChanges" --dry-run  --test-level NoTestRun
