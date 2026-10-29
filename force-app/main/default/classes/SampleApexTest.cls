@@ -1,6 +1,7 @@
 @isTest (seeAllData=true)
 
 private class SampleApexTest{
+
 static testMethod void validateSampleApex() {
 Account c = new Account(Name='BMW', DevOps_Center_Promote__c=100000);
 
