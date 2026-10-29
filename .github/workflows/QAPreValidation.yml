@@ -109,8 +109,7 @@ jobs:
       #######################################################
 
       - name: Run AI Impact Analysis
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        continue-on-error: true
         run: |
           python scripts/impact_analysis.py
 
