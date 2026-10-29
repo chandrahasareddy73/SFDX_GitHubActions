@@ -1,29 +1,36 @@
 from openai import OpenAI
 
-client = OpenAI()
+try:
+    client = OpenAI()
 
-with open("changedFiles.txt","r") as f:
-    changes = f.read()
+    with open("changedFiles.txt") as f:
+        changes = f.read()
 
-prompt = f"""
-Analyze these Salesforce metadata changes.
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {
+                "role":"user",
+                "content":f"Analyze Salesforce metadata changes:\n{changes}"
+            }
+        ]
+    )
 
-Identify:
-1. Impacted components
-2. Potential dependencies
-3. Risk score
-4. Recommended test classes
+    result = response.choices[0].message.content
 
-Changes:
-{changes}
+except Exception as e:
+
+    result = f"""
+AI Analysis Unavailable
+
+Reason:
+{str(e)}
+
+Fallback:
+Proceeding with standard validation.
 """
 
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[{"role":"user","content":prompt}]
-)
+with open("ai-analysis.txt","w") as f:
+    f.write(result)
 
-print(response.choices[0].message.content)
-
-with open("ai-analysis.txt","w") as out:
-    out.write(response.choices[0].message.content)
+print(result)
